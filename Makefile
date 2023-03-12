@@ -25,6 +25,11 @@ build_image_serverless:
 run_cmd_go:
 	docker run -v ${PWD}/src/api:/go/src/app ${IMAGE_TAG_GO} ${cmd}
 
+run_serverless_command:
+	docker run -v ${PWD}/api:/app:rw \
+			-v /app/node_modules \
+            -e CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN} ${IMAGE_TAG_SERVERLESS} ${cmd}
+
 localstack_up:
 	DEBUG=true docker-compose up -d
 
@@ -74,7 +79,7 @@ ci_build_api:
 	make build_api
 
 ci_deploy_api:
-	make serverless_run_command cmd='serverless deploy function --function=entrypoint --stage prod --region eu-west-2 --verbose --force --update-config'
+	make run_serverless_command cmd='serverless deploy function --function=entrypoint --stage prod --region ${AWS_DEFAULT_REGION}--verbose --force --update-config'
 
 ci_deploy_fe:
 	docker run -v ${PWD}/app:/aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} amazon/aws-cli s3 sync dist/ s3://${AWS_BUCKET_NAME} --region eu-west-2
