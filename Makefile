@@ -28,6 +28,8 @@ run_cmd_go:
 run_serverless_command:
 	docker run -v ${PWD}/src/api:/app:rw \
 			-v /app/node_modules \
+			-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+			-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
             -e CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN} ${IMAGE_TAG_SERVERLESS} ${cmd}
 
 localstack_up:
