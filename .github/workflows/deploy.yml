@@ -39,4 +39,5 @@ jobs:
       AWS_CF_DISTRIBUTION_ID: ${{ secrets.AWS_CF_DISTRIBUTION_ID }}
     steps:
       - uses: actions/checkout@v2
+      - name: Deploy FE
         run: make ci_deploy_fe
