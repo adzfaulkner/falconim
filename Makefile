@@ -57,8 +57,8 @@ verify_local_email:
 # ci specific
 
 docker_build_tag_push:
-	make build_docker_image_go
-	make build_docker_image_serverless
+	make build_image_go
+	make build_image_serverless
 	docker tag ${IMAGE_TAG_SERVERLESS}:latest ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest
 	docker tag ${IMAGE_TAG_GO}:latest ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest
 	docker push ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest
