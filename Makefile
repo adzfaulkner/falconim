@@ -63,3 +63,19 @@ docker_build_tag_push:
 	docker tag ${IMAGE_TAG_GO}:latest ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest
 	docker push ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest
 	docker push ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest
+
+docker_pull_be:
+	docker pull ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest
+	docker pull ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest
+	docker tag ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest ${IMAGE_TAG_SERVERLESS}:latest
+	docker tag ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest ${IMAGE_TAG_GO}:latest
+
+ci_build_api:
+	make build_api
+
+ci_deploy_api:
+	make serverless_run_command cmd='serverless deploy function --function=entrypoint --stage prod --region eu-west-2 --verbose --force --update-config'
+
+ci_deploy_fe:
+	docker run -v ${PWD}/app:/aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} amazon/aws-cli s3 sync dist/ s3://${AWS_BUCKET_NAME} --region eu-west-2
+	docker run -v ${PWD}/app:/aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} amazon/aws-cli cloudfront create-invalidation --distribution-id ${AWS_CF_DISTRIBUTION_ID} --paths '/*' --region eu-west-2
