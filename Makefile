@@ -17,10 +17,10 @@ init_dev_env:
 	make deploy_api
 
 build_image_go:
-	docker build --target go --tag ${IMAGE_TAG_GO} .
+	docker build --file ./Dockerfile --target go --tag ${IMAGE_TAG_GO} ./src/api
 
 build_image_serverless:
-	docker build --target serverless --tag ${IMAGE_TAG_SERVERLESS} .
+	docker build --file ./Dockerfile --target serverless --tag ${IMAGE_TAG_SERVERLESS} ./src/api
 
 run_cmd_go:
 	docker run -v ${PWD}/src/api:/go/src/app ${IMAGE_TAG_GO} ${cmd}
