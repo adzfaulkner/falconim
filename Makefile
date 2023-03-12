@@ -5,6 +5,8 @@ AWS_DEFAULT_REGION=eu-west-2
 AWS_LOCAL_COMMAND=aws --endpoint-url=http://localhost:4566 --region=${AWS_DEFAULT_REGION}
 SERVERLESS_STAGE=local
 
+# DEV ENV specific
+
 init_dev_env:
 	make localstack_up
 	make build_image_go
@@ -51,3 +53,13 @@ create_local_secrets:
 
 verify_local_email:
 	sh bin/verify_email.sh -l
+
+# ci specific
+
+docker_build_tag_push:
+	make build_docker_image_go
+	make build_docker_image_serverless
+	docker tag ${IMAGE_TAG_SERVERLESS}:latest ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest
+	docker tag ${IMAGE_TAG_GO}:latest ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest
+	docker push ghcr.io/adzfaulkner/${IMAGE_TAG_SERVERLESS}:latest
+	docker push ghcr.io/adzfaulkner/${IMAGE_TAG_GO}:latest

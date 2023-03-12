@@ -19,6 +19,13 @@ ${cmd} \
 
 ${cmd} \
   ssm put-parameter \
+  --name "/FalconIM/EMAIL_FROM" \
+  --type "SecureString" \
+  --value ${EMAIL_FROM} \
+  --overwrite
+
+${cmd} \
+  ssm put-parameter \
   --name "/FalconIM/RECAPTCHA_SECRET" \
   --type "SecureString" \
   --value ${RECAPTCHA_SECRET} \

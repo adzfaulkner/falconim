@@ -2,6 +2,7 @@ package handler
 
 import (
 	"encoding/json"
+	"fmt"
 	"go.uber.org/zap"
 	"net/http"
 
@@ -67,7 +68,9 @@ func Handler(response CorsResponse, sendEmail email.Send, recaptchaChecker recap
 			return *response(buildResponse(false, "Unable to process the request"), http.StatusBadRequest, nil), nil
 		}
 
-		err = sendEmail(reqBody.Email, reqBody.Subject, reqBody.Message)
+		msg := fmt.Sprintf("<p>Name: %s</p><p>Email: %s</p><p>Message: %s</p>", reqBody.Name, reqBody.Email, reqBody.Message)
+
+		err = sendEmail(reqBody.Subject, msg)
 
 		if err != nil {
 			logger.Error("Unable to send email", zap.Error(err))

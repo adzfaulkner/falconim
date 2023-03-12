@@ -7,10 +7,10 @@ import (
 
 const CharSet = "UTF-8"
 
-type Send func(emailFrom, subject, msg string) error
+type Send func(subject, msg string) error
 
-func SendEmail(svc *ses.SES, emailTo string) Send {
-	return func(emailFrom, subject, msg string) error {
+func SendEmail(svc *ses.SES, sendFrom, emailTo string) Send {
+	return func(subject, msg string) error {
 		input := &ses.SendEmailInput{
 			Destination: &ses.Destination{
 				CcAddresses: []*string{},
@@ -34,9 +34,7 @@ func SendEmail(svc *ses.SES, emailTo string) Send {
 					Data:    aws.String(subject),
 				},
 			},
-			Source: aws.String(emailFrom),
-			// Uncomment to use a configuration set
-			//ConfigurationSetName: aws.String(ConfigurationSet),
+			Source: aws.String(sendFrom),
 		}
 
 		_, err := svc.SendEmail(input)

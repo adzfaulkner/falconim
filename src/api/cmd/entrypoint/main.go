@@ -37,11 +37,12 @@ func main() {
 	ssmsvc := ssm.New(sess, aws.NewConfig().WithRegion(region))
 	sessvc := ses.New(sess, aws.NewConfig().WithRegion(region))
 
+	emailFrom := getSmmParamVal(ssmsvc, "/FalconIM/EMAIL_FROM")
 	emailTo := getSmmParamVal(ssmsvc, "/FalconIM/EMAIL_TO")
 	recaptchaSecret := getSmmParamVal(ssmsvc, "/FalconIM/RECAPTCHA_SECRET")
 
 	recaptchaCheck := recaptcha.Check(recaptchaSecret)
-	sendEmail := email.SendEmail(sessvc, emailTo)
+	sendEmail := email.SendEmail(sessvc, emailFrom, emailTo)
 
 	lh, err := logger.NewHandler()
 

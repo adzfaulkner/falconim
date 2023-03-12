@@ -11,3 +11,4 @@ done
 export $(cat ./src/api/.env | grep -v '#' | sed 's/\r$//' | awk '/=/ {print $1}' )
 
 ${cmd} ses verify-email-identity --email-address ${EMAIL_TO}
+${cmd} ses verify-email-identity --email-address ${EMAIL_FROM}
