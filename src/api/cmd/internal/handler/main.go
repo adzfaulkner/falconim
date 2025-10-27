@@ -68,7 +68,7 @@ func Handler(response CorsResponse, sendEmail email.Send, recaptchaChecker recap
 			return *response(buildResponse(false, "Unable to process the request"), http.StatusBadRequest, nil), nil
 		}
 
-		msg := fmt.Sprintf("<p>Name: %s</p><p>Email: %s</p><p>Message: %s</p>", reqBody.Name, reqBody.Email, reqBody.Message)
+		msg := fmt.Sprintf("<p>Name: %s</p><p>Email: %s</p><p>Message: %s</p><p>Req body: %s</p><p>IP: %s</p>", reqBody.Name, reqBody.Email, reqBody.Message, request.Body, reqIp)
 
 		err = sendEmail(reqBody.Subject, msg)
 
