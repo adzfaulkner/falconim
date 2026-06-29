@@ -8,9 +8,10 @@ COPY ./* ./
 
 CMD ["app"]
 
-FROM amaysim/serverless:4.14.4 as serverless
+FROM node:26-alpine3.23 as serverless
 
-RUN mkdir /app
+RUN npm i serverless -g \
+    && mkdir /app
 
 WORKDIR /app
 
