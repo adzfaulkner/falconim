@@ -66,6 +66,7 @@ useDotenv: true
 #    variable1: value1
 
 package:
+  individually: true
   patterns:
     - "!./**"
     - ./bin/**
