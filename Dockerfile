@@ -1,4 +1,4 @@
-FROM golang:1.25-alpine as go
+FROM golang:1.26.4-alpine as go
 
 WORKDIR /go/src/app
 COPY ./* ./
@@ -8,7 +8,7 @@ COPY ./* ./
 
 CMD ["app"]
 
-FROM amaysim/serverless:3.23.0 as serverless
+FROM amaysim/serverless:4.14.4 as serverless
 
 RUN mkdir /app
 
