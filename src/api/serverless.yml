@@ -82,7 +82,10 @@ custom:
 
 functions:
   entrypoint:
-    handler: bin/entrypoint/bootstrap
+    handler: bootstrap
+    timeout: 30
+    package:
+      artifact: bin/entrypoint/bootstrap.zip
     environment:
       AWS_ENDPOINT: ${env:AWS_ENDPOINT, ""}
       CORS_ALLOWED_ORIGIN: ${env:CORS_ALLOWED_ORIGIN, ""}
