@@ -82,8 +82,7 @@ ci_build_api:
 	make build_api
 
 ci_deploy_api:
-	make run_serverless_command cmd='serverless login'
-	make run_serverless_command cmd='serverless deploy function --function=entrypoint --stage prod --region ${AWS_DEFAULT_REGION} --verbose --force --update-config'
+	make run_serverless_command cmd='serverless login && serverless deploy function --function=entrypoint --stage prod --region ${AWS_DEFAULT_REGION} --verbose --force'
 
 ci_deploy_fe:
 	docker run -v ${PWD}/src/frontend:/aws -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} amazon/aws-cli s3 sync ./ s3://${AWS_BUCKET_NAME} --region ${AWS_DEFAULT_REGION}
