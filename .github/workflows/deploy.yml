@@ -25,6 +25,8 @@ jobs:
           password: ${{ secrets.CR_PAT }}
       - name: Pull go images
         run: make docker_pull_be
+      - name: Serverless login
+        run: make run_serverless_command cmd='login'
       - name: Build binary
         run: make ci_build_api
       - name: Deploy function
