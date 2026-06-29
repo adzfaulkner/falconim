@@ -48,7 +48,10 @@ sync_s3_bucket:
 	${AWS_LOCAL_COMMAND} s3 website s3://${S3_BUCKET_NAME}/ --index-document index.html
 
 build_api:
-	docker run -v ${PWD}/src/api:/go/src/app:rw -w /go/src/app/cmd/entrypoint ${IMAGE_TAG_GO} sh -c 'GOARCH=amd64 GOOS=linux CGO_ENABLED=0 go build -o ../../bin/entrypoint/bootstrap -ldflags="-s -w" .'
+	mkdir -p ${PWD}/api/bin/entrypoint
+	chmod 0755 ${PWD}/api/bin/entrypoint
+	docker run -v ${PWD}/src/api:/go/src/app:rw -w /go/src/app/cmd/entrypoint ${IMAGE_TAG_GO} sh -c 'GOARCH=arm64 GOOS=linux go build -o ../../bin/entrypoint/bootstrap'
+	zip -j ${PWD}/api/bin/entrypoint/bootstrap.zip ${PWD}/api/bin/entrypoint/bootstrap
 
 deploy_api:
 	cd src/api && serverless deploy --stage ${SERVERLESS_STAGE} --region eu-west-2
