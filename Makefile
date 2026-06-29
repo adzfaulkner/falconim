@@ -30,7 +30,8 @@ run_serverless_command:
 			-v /app/node_modules \
 			-e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 			-e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-            -e CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN} ${IMAGE_TAG_SERVERLESS} ${cmd}
+            -e CORS_ALLOWED_ORIGIN=${CORS_ALLOWED_ORIGIN} \
+            -e SERVERLESS_ACCESS_KEY=${SERVERLESS_ACCESS_KEY} ${IMAGE_TAG_SERVERLESS} ${cmd}
 
 localstack_up:
 	DEBUG=true docker-compose up -d
@@ -81,6 +82,7 @@ ci_build_api:
 	make build_api
 
 ci_deploy_api:
+	make run_serverless_command cmd='serverless login'
 	make run_serverless_command cmd='serverless deploy function --function=entrypoint --stage prod --region ${AWS_DEFAULT_REGION} --verbose --force --update-config'
 
 ci_deploy_fe:
