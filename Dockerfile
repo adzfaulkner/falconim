@@ -19,5 +19,5 @@ COPY ./package.* ./
 
 RUN npm install
 
-ENTRYPOINT ["servless"]
+ENTRYPOINT ["serverless"]
 
