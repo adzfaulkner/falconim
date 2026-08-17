@@ -36,6 +36,10 @@ provider:
         - Effect: 'Allow'
           Resource: '*'
           Action: 'ses:*'
+        - Effect: 'Allow'
+          Action:
+            - 's3:PutObject'
+            - 's3:GetObject'
 
 useDotenv: true
 
