@@ -41,8 +41,7 @@ provider:
           Action: 's3:*'
         - Effect: "Allow"
           Action:
-            - "s3:ListBucket"
-          Resource: { "Fn::Join": [ "", [ "arn:aws:s3:::", { "Ref": "ServerlessDeploymentBucket" } ] ] }
+            - "s3:GetBucketLocation"
 
 useDotenv: true
 
