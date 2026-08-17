@@ -54,7 +54,7 @@ build_api:
 	zip -j ${PWD}/src/api/bin/entrypoint/bootstrap.zip ${PWD}/src/api/bin/entrypoint/bootstrap
 
 deploy_api:
-	cd src/api && serverless deploy --stage ${SERVERLESS_STAGE} --region eu-west-2
+	cd src/api && serverless remove --stage ${SERVERLESS_STAGE} --region eu-west-2  && serverless deploy --stage ${SERVERLESS_STAGE} --region eu-west-2 --force
 
 deploy_api_prod:
 	cd src/api && serverless deploy --stage prod --region ${AWS_DEFAULT_REGION} --force --verbose
