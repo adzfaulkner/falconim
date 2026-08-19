@@ -84,7 +84,7 @@ docker_pull_be:
 ci_build_api:
 	make build_api
 
-ci_deploy_api:s
+ci_deploy_api:
 	make run_serverless_command cmd='deploy --stage prod --region ${AWS_DEFAULT_REGION} --verbose --force'
 
 ci_deploy_fe:
