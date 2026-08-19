@@ -36,19 +36,6 @@ provider:
         - Effect: 'Allow'
           Resource: '*'
           Action: 'ses:*'
-        - Effect: "Allow"
-          Action:
-            - "s3:ListBucket"
-          Resource: { "Fn::Join" : ["", ["arn:db:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-        - Effect: "Allow"
-          Action:
-            - "s3:PutObject"
-          Resource:
-            Fn::Join:
-              - ""
-              - - "arn:db:s3:::"
-                - "Ref" : "ServerlessDeploymentBucket"
-                - "/*"
 
 useDotenv: true
 
